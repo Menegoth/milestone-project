@@ -1,12 +1,30 @@
 //card object
 class Card {
 
-    constructor(suit, number) {
-        this.suit = suit;
-        this.number = number;
+    //create suit, number and value using class functions
+    constructor() {
+        this.suit = this.pickSuit();
+        this.number = this.pickCard();
         this.value = this.generateValue();
     }
 
+    //pick suit randomly based on array of suits
+    pickSuit() {
+
+        let suits = ["clubs", "hearts", "diamonds", "spades"];
+        return suits[Math.floor(Math.random() * suits.length)];
+    
+    }
+    
+    //pick card number randomly based on array 
+    pickCard() {
+    
+        let cards = ["ace", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"];
+        return cards[Math.floor(Math.random() * cards.length)];
+    
+    }    
+
+    //generate card value based on card number
     generateValue() {
         switch(this.number) {
             case "one":
@@ -38,19 +56,3 @@ class Card {
     }
 
 }
-
-//array of suits and cards and pick random
-function pickSuit() {
-
-    let suits = ["clubs", "hearts", "diamonds", "spades"];
-    return suits[Math.floor(Math.random() * suits.length)];
-
-}
-
-function pickCard() {
-
-    let cards = ["ace", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"];
-    return cards[Math.floor(Math.random() * cards.length)];
-
-}
-
