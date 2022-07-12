@@ -1,7 +1,7 @@
 //create player hand array to add cards to
 let playerHand = [];
 createNewPlayerCard();
-createNewPlayerCard()
+createNewPlayerCard();
 
 const hitButton = document.getElementById("hit");
 const stopButton = document.getElementById("stop");
@@ -11,7 +11,7 @@ createButtonFunctionalities();
 //button functionalities
 function createButtonFunctionalities() {
     hitButton.addEventListener("click", createNewPlayerCard);
-    stopButton.addEventListener("click", displayResults);
+    stopButton.addEventListener("click", displayResults); //WILL BE CHANGED WHEN COMPUTER IS ADDED
 }
 
 function createNewPlayerCard() {
@@ -41,6 +41,11 @@ function createNewPlayerCard() {
 
     playerHand.push(card);
 
+    //check score and disable buttons if at or above 21
+    if (checkScore(playerHand) >= 21) {
+        displayResults();
+    }
+
 }
 
 //check total of values in hand
@@ -53,7 +58,8 @@ function checkScore(hand) {
 }
 
 //check results
-function displayResults() {
+//TESTING ONLY logic will be changed when computer is added
+function displayResults() { 
     //remove button functionality
     hitButton.removeEventListener("click", createNewPlayerCard);
     stopButton.removeEventListener("click", displayResults);
@@ -69,3 +75,18 @@ function displayResults() {
         results.textContent = "you lose"
     }
 }
+
+/*TODO:
+
+    add computer logic
+    add score checking logic
+
+    add replay button
+    scorecounter
+    save score locally
+
+    after game works:
+        add images for each card
+        style elements
+
+*/
