@@ -6,6 +6,7 @@ createNewPlayerCard();
 
 //create computer hand 
 let computerHand = [];
+const computerHandDiv = document.getElementById("computer-hand");
 
 //player logic
 
@@ -17,7 +18,7 @@ createButtonFunctionalities();
 //button functionalities
 function createButtonFunctionalities() {
     hitButton.addEventListener("click", createNewPlayerCard);
-    stopButton.addEventListener("click", displayResults); //WILL BE CHANGED WHEN COMPUTER IS ADDED
+    stopButton.addEventListener("click", computerTurn); 
 }
 
 function createCard(hand, handDiv) {
@@ -47,15 +48,16 @@ function createCard(hand, handDiv) {
 
     hand.push(card);
 
-    //check score and disable buttons if at or above 21
-    if (checkScore(playerHand) >= 21) {
-        displayResults();
-    }
-
 }
 
+//create new card in player hand and check score total
 function createNewPlayerCard() {
     createCard(playerHand, playerHandDiv);
+    
+    //check score and disable buttons if at or above 21
+    if (checkScore(playerHand) >= 21) {
+        computerTurn();
+    }
 }
 
 //check total of values in hand
@@ -67,42 +69,64 @@ function checkScore(hand) {
     return total;
 }
 
-//check results
-//TESTING ONLY logic will be changed when computer is added
-function displayResults() { 
-    //remove button functionality
-    hitButton.removeEventListener("click", createNewPlayerCard);
-    stopButton.removeEventListener("click", displayResults);
-
-    const results = document.getElementById("results-header");
-    let playerScore = checkScore(playerHand);
-
-    if (playerScore < 21) {
-        results.textContent = "less than 21 but still win"
-    } else if (playerScore == 21) {
-        results.textContent = "you win";
-    } else {
-        results.textContent = "you lose"
-    }
-}
-
 //computer logic
 function computerTurn() {
+    //remove buttons functionality
+    hitButton.removeEventListener("click", createNewPlayerCard);
+    stopButton.removeEventListener("click", computerTurn);
+
+    //loop through computer logic while card total is less than 15
     let playing = true;
 
     while (playing) {
+        
+        createCard(computerHand, computerHandDiv);
+
+        if (checkScore(computerHand) >= 15) {
+            playing = false;
+        }
 
     }
 
+    console.log(computerHand, checkScore(computerHand)); //testing
+    displayResults();
 }
 
 
+//check results
+function displayResults() { 
+    const resultsHeader = document.getElementById("results-header");
+    let playerScore = checkScore(playerHand);
+    let computerScore = checkScore(computerHand);
 
+    if (playerScore > computerScore && playerScore <= 21) { //player has higher number while still being below or equal to 21
+        resultsHeader.textContent = "You Win";
+    } else if (computerScore > playerScore && computerScore <= 21) { //computer has higher number while still below or equal to 21
+        resultsHeader.textContent = "Computer Wins";
+    } else if (playerScore > 21 && computerScore <= 21) { //player goes over 21 computer does not
+        resultsHeader.textContent = "Computer Wins";
+    } else if (computerScore > 21 && playerScore <= 21) { //computer goes over 21 and player does not
+        resultsHeader.textContent = "Player Wins";
+    } else {
+        resultsHeader.textContent = "Tie Game";
+    }
+    
+}
+
+/* OUTCOMES
+
+    player has higher number while below or equal 21
+    computer has higher number while below below or equal 21
+    player goes over 21 computer does not
+    computer goes over 21 player does not
+    anything else is a tie
+
+*/
 
 /*TODO:
 
-    add computer logic
-    add score checking logic
+    add computer logic (done)
+    add score checking logic (done)
 
     add replay button
     scorecounter
