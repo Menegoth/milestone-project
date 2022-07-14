@@ -13,6 +13,7 @@ const replayButton = document.getElementById("replay");
 //hand arrays
 let playerHand = [];
 let computerHand = [];
+initializeHands();
 
 //check for local storage and set if not
 window.onload = function() {
@@ -22,6 +23,26 @@ window.onload = function() {
     } else {
         updateScoreCounter();
     }
+}
+
+//initialize hands
+function initializeHands() {
+    //add cards to player array
+    createNewPlayerCard();
+    createNewPlayerCard();
+
+    //card backs for computer
+    const cardBackOne = document.createElement("img");
+    cardBackOne.src = "./images/back.png";
+    cardBackOne.style.width = "8em";
+
+    const cardBackTwo = document.createElement("img");
+    cardBackTwo.src = "./images/back.png";
+    cardBackTwo.style.width = "8em";
+
+    computerHandDiv.append(cardBackOne);
+    computerHandDiv.append(cardBackTwo);
+
 }
 
 //scores
@@ -43,9 +64,6 @@ document.getElementById("clear").addEventListener("click", () => {
     updateScoreCounter();
 });
 
-//add cards to player array
-createNewPlayerCard();
-createNewPlayerCard();
 
 //button functionalities
 function createButtonFunctionalities() {
@@ -60,24 +78,17 @@ function createCard(hand, handDiv) {
     //create new card object
     let card = new Card();
 
-    //create elements for each 
+    // //create elements for each 
     const cardDiv = document.createElement("div");
-    const cardNumber = document.createElement("h1");
-    const cardSuit = document.createElement("p");
-
-    //div for card
-    cardDiv.style.width = "120px";
-    cardDiv.style.height = "175px";
-    cardDiv.style.border = "1px solid black";
     cardDiv.style.display = "inline-block";
 
-    //set values
-    cardSuit.textContent = card.suit;
-    cardNumber.textContent = card.number;
+    //create image based on suit and number
+    const cardImg = document.createElement("img");
+    cardImg.src = card.imageSrc;
+    cardImg.style.width = "8em";
 
     //append all elements to page
-    cardDiv.append(cardSuit, cardNumber);
-
+    cardDiv.append(cardImg);
     handDiv.append(cardDiv);
 
     hand.push(card);
@@ -87,11 +98,6 @@ function createCard(hand, handDiv) {
 //create new card in player hand and check score total
 function createNewPlayerCard() {
     createCard(playerHand, playerHandDiv);
-    
-    //check score and disable buttons if at or above 21
-    if (checkScore(playerHand) >= 21) {
-        computerTurn();
-    }
 }
 
 //check total of values in hand
@@ -105,6 +111,9 @@ function checkScore(hand) {
 
 //computer logic
 function computerTurn() {
+    //clear hand of card backs
+    computerHandDiv.innerHTML = "";
+
     //remove buttons functionality
     hitButton.removeEventListener("click", createNewPlayerCard);
     stopButton.removeEventListener("click", computerTurn);
@@ -173,9 +182,8 @@ function restartGame() {
     createButtonFunctionalities()
     replayButton.removeEventListener("click", restartGame);
 
-    //add two cards to player hand
-    createNewPlayerCard();
-    createNewPlayerCard();
+    //re-initialize hands
+    initializeHands();
 }
 
 /*TODO:
@@ -190,7 +198,7 @@ function restartGame() {
     make it so computer cards dont disappear (after images work)
 
     after game works:
-        add images for each card
+        add images for each card (done)
         style elements
             buttons grayed out when not available
             background

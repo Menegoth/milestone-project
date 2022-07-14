@@ -6,6 +6,7 @@ class Card {
         this.suit = this.pickSuit();
         this.number = this.pickCard();
         this.value = this.generateValue();
+        this.imageSrc = `./images/${this.suit}/${this.number}.png`;
     }
 
     //pick suit randomly based on array of suits
@@ -19,7 +20,7 @@ class Card {
     //pick card number randomly based on array 
     pickCard() {
     
-        let cards = ["ace", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"];
+        let cards = ["ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"];
         return cards[Math.floor(Math.random() * cards.length)];
     
     }    
