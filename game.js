@@ -3,6 +3,9 @@ const resultsHeader = document.getElementById("results-header");
 const playerHandDiv = document.getElementById("player-hand");
 const computerHandDiv = document.getElementById("computer-hand");
 
+const playerWins = document.getElementById("player-wins");
+const computerWins = document.getElementById("computer-wins");
+
 const hitButton = document.getElementById("hit");
 const stopButton = document.getElementById("stop");
 const replayButton = document.getElementById("replay");
@@ -10,6 +13,10 @@ const replayButton = document.getElementById("replay");
 //hand arrays
 let playerHand = [];
 let computerHand = [];
+
+//scores
+let totalPlayerWins = 0;
+let totalComputerWins = 0;
 
 createButtonFunctionalities();
 
@@ -103,26 +110,30 @@ function displayResults() {
 
     if (playerScore > computerScore && playerScore <= 21) { //player has higher number while still being below or equal to 21
         resultsHeader.textContent = "Result: You Win";
+        totalPlayerWins++;
     } else if (computerScore > playerScore && computerScore <= 21) { //computer has higher number while still below or equal to 21
         resultsHeader.textContent = "Result: Computer Wins";
+        totalComputerWins++
     } else if (playerScore > 21 && computerScore <= 21) { //player goes over 21 computer does not
         resultsHeader.textContent = "Result: Computer Wins";
+        totalComputerWins++;
     } else if (computerScore > 21 && playerScore <= 21) { //computer goes over 21 and player does not
         resultsHeader.textContent = "Result: Player Wins";
+        totalPlayerWins++
     } else {
         resultsHeader.textContent = "Result: Tie Game";
     }
 
-    console.log(playerScore, computerScore) //for reference
+    //update scores
+    playerWins.textContent = `Total Player Wins: ${totalPlayerWins}`;
+    computerWins.textContent = `Total Computer Wins ${totalComputerWins}`;
 
     //make replay button work
-    replayButton.addEventListener("click", restartGame);
-    
+    replayButton.addEventListener("click", restartGame);   
 }
 
 //function to restart game
 function restartGame() {
-
     //reset both hands
     playerHand = [];
     computerHand = [];
@@ -139,8 +150,6 @@ function restartGame() {
     //add two cards to player hand
     createNewPlayerCard();
     createNewPlayerCard();
-
-    console.log("replayed")
 }
 
 /* RESTART:
@@ -156,7 +165,7 @@ function restartGame() {
     add score checking logic (done)
 
     add replay button (done)
-    scorecounter
+    scorecounter (done)
     save score locally
 
     after game works:
