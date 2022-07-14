@@ -1,7 +1,13 @@
 //create player hand array to add cards to
+const playerHandDiv = document.getElementById("player-hand");
 let playerHand = [];
 createNewPlayerCard();
 createNewPlayerCard();
+
+//create computer hand 
+let computerHand = [];
+
+//player logic
 
 const hitButton = document.getElementById("hit");
 const stopButton = document.getElementById("stop");
@@ -14,7 +20,7 @@ function createButtonFunctionalities() {
     stopButton.addEventListener("click", displayResults); //WILL BE CHANGED WHEN COMPUTER IS ADDED
 }
 
-function createNewPlayerCard() {
+function createCard(hand, handDiv) {
 
     //create new card object
     let card = new Card();
@@ -37,15 +43,19 @@ function createNewPlayerCard() {
     //append all elements to page
     cardDiv.append(cardSuit, cardNumber);
 
-    document.getElementById("player-hand").append(cardDiv);
+    handDiv.append(cardDiv);
 
-    playerHand.push(card);
+    hand.push(card);
 
     //check score and disable buttons if at or above 21
     if (checkScore(playerHand) >= 21) {
         displayResults();
     }
 
+}
+
+function createNewPlayerCard() {
+    createCard(playerHand, playerHandDiv);
 }
 
 //check total of values in hand
@@ -75,6 +85,19 @@ function displayResults() {
         results.textContent = "you lose"
     }
 }
+
+//computer logic
+function computerTurn() {
+    let playing = true;
+
+    while (playing) {
+
+    }
+
+}
+
+
+
 
 /*TODO:
 
