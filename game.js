@@ -178,13 +178,6 @@ function restartGame() {
     createNewPlayerCard();
 }
 
-/* RESTART:
-    reset both hands and empty hand divs
-    re-add functionality to hit and stop buttons
-    profit?
-*/
-
-
 /*TODO:
 
     add computer logic (done)
@@ -192,8 +185,9 @@ function restartGame() {
 
     add replay button (done)
     scorecounter (done)
-    save score locally
-    make it so computer cards dont disappear
+    save score locally (done)
+    
+    make it so computer cards dont disappear (after images work)
 
     after game works:
         add images for each card
