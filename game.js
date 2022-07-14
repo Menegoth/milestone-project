@@ -17,7 +17,7 @@ initializeHands();
 
 //check for local storage and set if not
 window.onload = function() {
-    if (!localStorage.getItem("playerWins") && !localStorage.getItem("computerWins")) {
+    if (!localStorage.getItem("playerWins") || !localStorage.getItem("computerWins")) {
         localStorage.setItem("playerWins", 0);
         localStorage.setItem("computerWins", 0);
     } else {
@@ -195,7 +195,7 @@ function restartGame() {
     scorecounter (done)
     save score locally (done)
     
-    make it so computer cards dont disappear (after images work)
+    make it so computer cards dont disappear (after images work) (done)
 
     after game works:
         add images for each card (done)
