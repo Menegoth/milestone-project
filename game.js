@@ -14,11 +14,34 @@ const replayButton = document.getElementById("replay");
 let playerHand = [];
 let computerHand = [];
 
-//scores
-let totalPlayerWins = 0;
-let totalComputerWins = 0;
+//check for local storage and set if not
+window.onload = function() {
+    if (!localStorage.getItem("playerWins") && !localStorage.getItem("computerWins")) {
+        localStorage.setItem("playerWins", 0);
+        localStorage.setItem("computerWins", 0);
+    } else {
+        updateScoreCounter();
+    }
+}
 
+//scores
+let totalPlayerWins = localStorage.getItem("playerWins");
+let totalComputerWins = localStorage.getItem("computerWins");
+
+//update scorecounter using localstorage
+function updateScoreCounter() {
+    playerWins.textContent = `Total Player Wins: ${localStorage.getItem("playerWins")}`;
+    computerWins.textContent = `Total Computer Wins: ${localStorage.getItem("computerWins")}`;
+}
+
+//buttons now work
 createButtonFunctionalities();
+document.getElementById("clear").addEventListener("click", () => {
+    localStorage.clear();
+    localStorage.setItem("playerWins", 0);
+    localStorage.setItem("computerWins", 0);
+    updateScoreCounter();
+});
 
 //add cards to player array
 createNewPlayerCard();
@@ -113,20 +136,23 @@ function displayResults() {
         totalPlayerWins++;
     } else if (computerScore > playerScore && computerScore <= 21) { //computer has higher number while still below or equal to 21
         resultsHeader.textContent = "Result: Computer Wins";
-        totalComputerWins++
+        totalComputerWins++;
     } else if (playerScore > 21 && computerScore <= 21) { //player goes over 21 computer does not
         resultsHeader.textContent = "Result: Computer Wins";
         totalComputerWins++;
     } else if (computerScore > 21 && playerScore <= 21) { //computer goes over 21 and player does not
         resultsHeader.textContent = "Result: Player Wins";
-        totalPlayerWins++
+        totalPlayerWins++;
     } else {
         resultsHeader.textContent = "Result: Tie Game";
     }
 
+    //update local storage
+    localStorage.setItem("playerWins", totalPlayerWins);
+    localStorage.setItem("computerWins", totalComputerWins);
+
     //update scores
-    playerWins.textContent = `Total Player Wins: ${totalPlayerWins}`;
-    computerWins.textContent = `Total Computer Wins ${totalComputerWins}`;
+    updateScoreCounter();
 
     //make replay button work
     replayButton.addEventListener("click", restartGame);   
@@ -167,6 +193,7 @@ function restartGame() {
     add replay button (done)
     scorecounter (done)
     save score locally
+    make it so computer cards dont disappear
 
     after game works:
         add images for each card
