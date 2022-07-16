@@ -8,37 +8,37 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-success" style="--bs-bg-opacity: .7;">
 
-    <div class="hand">
+    <div class="text-center">
         <h1>Player Hand</h1>
-        <button id="hit">hit</button>
-        <button id="stop">stop</button>
+        <button id="hit" class="btn btn-primary btn-lg mx-1 my-1">Hit</button>
+        <button id="stop" class="btn btn-danger btn-lg mx-1 my-1">Stop</button>
 
         <div id="player-hand"></div>
     </div>
 
-    <div class="hand">
-        <h1>Computer Hand</h1>
+    <div class="text-center">
+        <h1 class="mx-1 my-1">Computer Hand</h1>
 
         <div id="computer-hand"></div>
     </div>
 
-    <div id="results-div">
-        <h3 id="results-header">Result: </h1>
+    <div id="results-div" class="text-center">
+        <h3 id="results-header" class="mx-1 my-1">Result: </h1>
     </div>
 
-    <div>
-        <h3 id="player-wins">Total Player Wins: ?</h3>
-        <h3 id="computer-wins">Total Computer Wins: ?</h3>
+    <div class="text-center">
+        <h3 id="player-wins" class="mx-1 my-1">Total Player Wins:</h3>
+        <h3 id="computer-wins" class="mx-1 my-1">Total Computer Wins:</h3>
     </div>
 
-    <div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-        <button id="replay" disabled>Replay</button>
-        <button id="clear">Clear Score</button>
+    <div class="text-center">        
+        <button id="replay" class="btn btn-secondary mx-1 my-1" disabled>Replay</button>
+        <button id="clear" class="btn btn-outline-danger mx-1 my-1">Clear Score</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="card.js"></script>
     <script src="game.js"></script>
 </body>

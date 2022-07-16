@@ -27,7 +27,6 @@ clearButton.addEventListener("click", () => {
     updateScoreCounter();
 });
 
-
 //check for local storage and set if not
 window.onload = function() {
     if (!localStorage.getItem("playerWins") || !localStorage.getItem("computerWins")) {
@@ -48,10 +47,12 @@ function initializeHands() {
     const cardBackOne = document.createElement("img");
     cardBackOne.src = "./images/back.png";
     cardBackOne.style.width = "8em";
+    cardBackOne.classList = "mx-1 my-1"
 
     const cardBackTwo = document.createElement("img");
     cardBackTwo.src = "./images/back.png";
     cardBackTwo.style.width = "8em";
+    cardBackTwo.classList = "mx-1 my-1";
 
     computerHandDiv.append(cardBackOne);
     computerHandDiv.append(cardBackTwo);
@@ -79,23 +80,20 @@ function updateScoreCounter() {
 
 //player logic
 
+//create a card and add it to specified div
 function createCard(hand, handDiv) {
 
     //create new card object
     let card = new Card();
 
-    // //create elements for each 
-    const cardDiv = document.createElement("div");
-    cardDiv.style.display = "inline-block";
-
     //create image based on suit and number
     const cardImg = document.createElement("img");
     cardImg.src = card.imageSrc;
     cardImg.style.width = "8em";
+    cardImg.classList = "mx-1 my-1"
 
     //append all elements to page
-    cardDiv.append(cardImg);
-    handDiv.append(cardDiv);
+    handDiv.append(cardImg);
 
     hand.push(card);
 
@@ -103,6 +101,11 @@ function createCard(hand, handDiv) {
 
 //create new card in player hand and check score total
 function createNewPlayerCard() {
+    //stop player from drawing more than 6 cards to not flood the screen
+    if (playerHand.length > 5) {
+        return;
+    }
+
     createCard(playerHand, playerHandDiv);
 }
 
@@ -192,24 +195,3 @@ function restartGame() {
     //re-initialize hands
     initializeHands();
 }
-
-/*TODO:
-
-    add computer logic (done)
-    add score checking logic (done)
-
-    add replay button (done)
-    scorecounter (done)
-    save score locally (done)
-    
-    make it so computer cards dont disappear (after images work) (done)
-
-    after game works:
-        add images for each card (done)
-        style elements
-            buttons grayed out when not available
-            background
-            text
-            (likely bootstrap)
-
-*/
