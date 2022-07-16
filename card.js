@@ -28,8 +28,6 @@ class Card {
     //generate card value based on card number
     generateValue() {
         switch(this.number) {
-            case "one":
-                return 1;
             case "two":
                 return 2;
             case "three":
