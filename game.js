@@ -9,11 +9,24 @@ const computerWins = document.getElementById("computer-wins");
 const hitButton = document.getElementById("hit");
 const stopButton = document.getElementById("stop");
 const replayButton = document.getElementById("replay");
+const clearButton = document.getElementById("clear");
 
 //hand arrays
 let playerHand = [];
 let computerHand = [];
 initializeHands();
+
+//buttons
+hitButton.addEventListener("click", createNewPlayerCard);
+stopButton.addEventListener("click", computerTurn); 
+replayButton.addEventListener("click", restartGame);
+clearButton.addEventListener("click", () => {
+    localStorage.clear();
+    localStorage.setItem("playerWins", 0);
+    localStorage.setItem("computerWins", 0);
+    updateScoreCounter();
+});
+
 
 //check for local storage and set if not
 window.onload = function() {
@@ -45,6 +58,15 @@ function initializeHands() {
 
 }
 
+//disable buttons
+function disableButton(button) {
+    button.setAttribute("disabled", "");
+}
+
+function enableButton(button) {
+    button.removeAttribute("disabled");
+}
+
 //scores
 let totalPlayerWins = localStorage.getItem("playerWins");
 let totalComputerWins = localStorage.getItem("computerWins");
@@ -53,22 +75,6 @@ let totalComputerWins = localStorage.getItem("computerWins");
 function updateScoreCounter() {
     playerWins.textContent = `Total Player Wins: ${localStorage.getItem("playerWins")}`;
     computerWins.textContent = `Total Computer Wins: ${localStorage.getItem("computerWins")}`;
-}
-
-//buttons now work
-createButtonFunctionalities();
-document.getElementById("clear").addEventListener("click", () => {
-    localStorage.clear();
-    localStorage.setItem("playerWins", 0);
-    localStorage.setItem("computerWins", 0);
-    updateScoreCounter();
-});
-
-
-//button functionalities
-function createButtonFunctionalities() {
-    hitButton.addEventListener("click", createNewPlayerCard);
-    stopButton.addEventListener("click", computerTurn); 
 }
 
 //player logic
@@ -115,8 +121,8 @@ function computerTurn() {
     computerHandDiv.innerHTML = "";
 
     //remove buttons functionality
-    hitButton.removeEventListener("click", createNewPlayerCard);
-    stopButton.removeEventListener("click", computerTurn);
+    disableButton(hitButton);
+    disableButton(stopButton);
 
     //loop through computer logic while card total is less than 15
     let playing = true;
@@ -164,7 +170,7 @@ function displayResults() {
     updateScoreCounter();
 
     //make replay button work
-    replayButton.addEventListener("click", restartGame);   
+    enableButton(replayButton);
 }
 
 //function to restart game
@@ -179,8 +185,9 @@ function restartGame() {
     resultsHeader.textContent = "Result: "
 
     //add and remove buttons
-    createButtonFunctionalities()
-    replayButton.removeEventListener("click", restartGame);
+    enableButton(hitButton);
+    enableButton(stopButton);
+    disableButton(replayButton);
 
     //re-initialize hands
     initializeHands();
