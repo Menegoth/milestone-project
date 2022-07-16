@@ -1,36 +1,23 @@
-//dom elements
-const resultsHeader = document.getElementById("results-header");
+//getting DOM elements
+
+//Divs
 const playerHandDiv = document.getElementById("player-hand");
 const computerHandDiv = document.getElementById("computer-hand");
 
+//Headers
+const resultsHeader = document.getElementById("results-header");
 const playerHandTotal = document.getElementById("player-hand-total");
 const computerHandTotal = document.getElementById("computer-hand-total");
-
 const playerWins = document.getElementById("player-wins");
 const computerWins = document.getElementById("computer-wins");
 
+//buttons
 const hitButton = document.getElementById("hit");
 const stopButton = document.getElementById("stop");
 const replayButton = document.getElementById("replay");
 const clearButton = document.getElementById("clear");
 
-//hand arrays
-let playerHand = [];
-let computerHand = [];
-initializeHands();
-
-//buttons
-hitButton.addEventListener("click", createNewPlayerCard);
-stopButton.addEventListener("click", computerTurn); 
-replayButton.addEventListener("click", restartGame);
-clearButton.addEventListener("click", () => {
-    localStorage.clear();
-    localStorage.setItem("playerWins", 0);
-    localStorage.setItem("computerWins", 0);
-    updateScoreCounter();
-});
-
-//check for local storage and set if not
+//check for local variables to save win count between sessions, creates local variables if not
 window.onload = function() {
     if (!localStorage.getItem("playerWins") || !localStorage.getItem("computerWins")) {
         localStorage.setItem("playerWins", 0);
@@ -40,13 +27,35 @@ window.onload = function() {
     }
 }
 
+//hand arrays, will be using these to manage deck
+let playerHand = [];
+let computerHand = [];
+initializeHands();
+
+//variables keeping track of the total wins
+let totalPlayerWins = localStorage.getItem("playerWins");
+let totalComputerWins = localStorage.getItem("computerWins");
+
+//button functionalities
+hitButton.addEventListener("click", createNewPlayerCard);
+stopButton.addEventListener("click", computerTurn); 
+replayButton.addEventListener("click", restartGame);
+//resets win variables and updates the score counter
+clearButton.addEventListener("click", () => {
+    localStorage.setItem("playerWins", 0);
+    localStorage.setItem("computerWins", 0);
+    totalPlayerWins = 0;
+    totalComputerWins = 0;
+    updateScoreCounter();
+});
+
 //initialize hands
 function initializeHands() {
     //add cards to player array
     createNewPlayerCard();
     createNewPlayerCard();
 
-    //card backs for computer
+    //create card backs for the computer hand using images
     const cardBackOne = document.createElement("img");
     cardBackOne.src = "./images/back.png";
     cardBackOne.style.width = "8em";
@@ -57,34 +66,31 @@ function initializeHands() {
     cardBackTwo.style.width = "8em";
     cardBackTwo.classList = "mx-1 my-1";
 
+    //append images and div to HTML
     computerHandDiv.append(cardBackOne);
     computerHandDiv.append(cardBackTwo);
 
+    //recalculate player counter and reset computer counter
     updateHandTotal(playerHandTotal, playerHand);
     computerHandTotal.textContent = "(?)";
 
 }
 
-//disable buttons
+//disable a button
 function disableButton(button) {
     button.setAttribute("disabled", "");
 }
 
+//enable a button
 function enableButton(button) {
     button.removeAttribute("disabled");
 }
-
-//scores
-let totalPlayerWins = localStorage.getItem("playerWins");
-let totalComputerWins = localStorage.getItem("computerWins");
 
 //update scorecounter using localstorage
 function updateScoreCounter() {
     playerWins.textContent = `Total Player Wins: ${localStorage.getItem("playerWins")}`;
     computerWins.textContent = `Total Computer Wins: ${localStorage.getItem("computerWins")}`;
 }
-
-//player logic
 
 //create a card and add it to specified div
 function createCard(hand, handDiv) {
@@ -108,13 +114,13 @@ function createCard(hand, handDiv) {
 //create new card in player hand and check score total
 function createNewPlayerCard() {
     //stop player from drawing more than 6 cards to not flood the screen
-    if (playerHand.length < 5) {       
+    if (playerHand.length < 6) {       
         createCard(playerHand, playerHandDiv);
         updateHandTotal(playerHandTotal, playerHand);
     }
 }
 
-//check total of values in hand
+//loop through a hand to calculate total
 function checkScore(hand) {
     let total = 0;
     hand.forEach(card => {
@@ -133,22 +139,20 @@ function computerTurn() {
     //clear hand of card backs
     computerHandDiv.innerHTML = "";
 
-    //remove buttons functionality
+    //disable buttons
     disableButton(hitButton);
     disableButton(stopButton);
 
-    //loop through computer logic while card total is less than 15
+    //use a loop to add cards to the computer's hand while total is less than 15
     let playing = true;
 
-    while (playing) {
-        
-        createCard(computerHand, computerHandDiv);
-        updateHandTotal(computerHandTotal, computerHand);
-
-        if (checkScore(computerHand) >= 15) {
+    while (playing) {      
+        if (checkScore(computerHand) < 15) {
+            createCard(computerHand, computerHandDiv);
+            updateHandTotal(computerHandTotal, computerHand);
+        } else {
             playing = false;
         }
-
     }
 
     displayResults();
@@ -157,6 +161,7 @@ function computerTurn() {
 
 //check results
 function displayResults() { 
+    //calculate total score for both players
     let playerScore = checkScore(playerHand);
     let computerScore = checkScore(computerHand);
 
@@ -183,7 +188,7 @@ function displayResults() {
     //update scores
     updateScoreCounter();
 
-    //make replay button work
+    //enable replay button
     enableButton(replayButton);
 }
 
@@ -193,7 +198,7 @@ function restartGame() {
     playerHand = [];
     computerHand = [];
 
-    //edit dom
+    //clear hands and result
     playerHandDiv.innerHTML = "";
     computerHandDiv.innerHTML = "";
     resultsHeader.textContent = "Result: "
