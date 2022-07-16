@@ -3,6 +3,9 @@ const resultsHeader = document.getElementById("results-header");
 const playerHandDiv = document.getElementById("player-hand");
 const computerHandDiv = document.getElementById("computer-hand");
 
+const playerHandTotal = document.getElementById("player-hand-total");
+const computerHandTotal = document.getElementById("computer-hand-total");
+
 const playerWins = document.getElementById("player-wins");
 const computerWins = document.getElementById("computer-wins");
 
@@ -57,6 +60,9 @@ function initializeHands() {
     computerHandDiv.append(cardBackOne);
     computerHandDiv.append(cardBackTwo);
 
+    updateHandTotal(playerHandTotal, playerHand);
+    computerHandTotal.textContent = "(?)";
+
 }
 
 //disable buttons
@@ -102,11 +108,10 @@ function createCard(hand, handDiv) {
 //create new card in player hand and check score total
 function createNewPlayerCard() {
     //stop player from drawing more than 6 cards to not flood the screen
-    if (playerHand.length > 5) {
-        return;
+    if (playerHand.length < 5) {       
+        createCard(playerHand, playerHandDiv);
+        updateHandTotal(playerHandTotal, playerHand);
     }
-
-    createCard(playerHand, playerHandDiv);
 }
 
 //check total of values in hand
@@ -116,6 +121,11 @@ function checkScore(hand) {
         total += card.value;
     })
     return total;
+}
+
+//update total of cards in a header
+function updateHandTotal(header, hand) {
+    header.textContent = `(${checkScore(hand)})`
 }
 
 //computer logic
@@ -133,6 +143,7 @@ function computerTurn() {
     while (playing) {
         
         createCard(computerHand, computerHandDiv);
+        updateHandTotal(computerHandTotal, computerHand);
 
         if (checkScore(computerHand) >= 15) {
             playing = false;

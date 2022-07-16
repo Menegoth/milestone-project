@@ -6,31 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milestone Project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-success" style="--bs-bg-opacity: .7;">
 
     <div class="text-center">
-        <h1>Player Hand</h1>
-        <button id="hit" class="btn btn-primary btn-lg mx-1 my-1">Hit</button>
-        <button id="stop" class="btn btn-danger btn-lg mx-1 my-1">Stop</button>
+        <h1 class="mx-1 my-1 d-inline-block" id="player-hand-header">Player Hand</h1>
+        <h4 class="d-inline-block" id="player-hand-total">(0)</h4>
+        <div>
+            <button id="hit" class="btn btn-primary btn-lg mx-1 my-1">Hit</button>
+            <button id="stop" class="btn btn-danger btn-lg mx-1 my-1">Stop</button>
+        </div> 
 
         <div id="player-hand"></div>
     </div>
 
     <div class="text-center">
-        <h1 class="mx-1 my-1">Computer Hand</h1>
-
+        <h1 class="mx-1 my-1 d-inline-block" id="computer-hand-header">Computer Hand</h1>
+        <h4 class="d-inline-block" id="computer-hand-total">(?)</h4>
+        
         <div id="computer-hand"></div>
     </div>
 
     <div id="results-div" class="text-center">
-        <h3 id="results-header" class="mx-1 my-1">Result: </h1>
+        <h2 id="results-header" class="mx-1 my-1">Result: </h2>
     </div>
 
     <div class="text-center">
-        <h3 id="player-wins" class="mx-1 my-1">Total Player Wins:</h3>
-        <h3 id="computer-wins" class="mx-1 my-1">Total Computer Wins:</h3>
+        <h5 id="player-wins" class="mx-1 my-1 text-light">Total Player Wins:</h5>
+        <h5 id="computer-wins" class="mx-1 my-1 text-light">Total Computer Wins:</h5>
     </div>
 
     <div class="text-center">        
